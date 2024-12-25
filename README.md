@@ -1,4 +1,4 @@
-# Guvi-Task-4_Income-Expense-Calculator
+# [Guvi-Task-4_Income-Expense-Calculator](https://guvi-task-4-income-expense-calc-calc.vercel.app/)
 ## Simple Steps to use the income-expense calculator.
 - Above url loads the page with income-expense calculator.
 - Seprate table is displayed for income entries and expense entries.
@@ -8,6 +8,11 @@
 - Entries can be removed by hitting delete button.
 - These enteries added in local storage so it persisits data across session.
 - Layout is responsive designed.
+
+## Following technologies are used for development
+  ### - HTML
+  ### - Tailwind CSS
+  ### - Javascript
 
 ## Screenshots
 ### Desktop
