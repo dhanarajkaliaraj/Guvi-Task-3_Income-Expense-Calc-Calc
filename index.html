@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guvi-Task-4_Income-Expense-Calculator</title>
+    <style>
+        html {
+            box-sizing: border-box;
+        }
+
+        *,
+        *::after,
+        *::before {
+            box-sizing: inherit;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: "#ffffff";
+            font-family: "Righteous", "sans";
+        }
+
+        a {
+            cursor: pointer;
+        }
+
+        a:hover,
+        button:hover {
+            opacity: 0.5;
+        }
+
+        h1,
+        h2,
+        h3 {
+            margin: 0;
+            padding: 0;
+            line-height: 1.2;
+        }
+    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extends: {
+                    display: ["group-hover"]
+                },
+                colors: {
+                    green: '#88C273',
+                    dkgray: '#536493',
+                    ivory: '#FFF1DB',
+                    white: '#ffffff',
+                    black: '#000000',
+                    brown: '#D4BDAC',
+                    purple: '#7F56D9',
+                    gray: "#536493",
+                    blue: "#3FA2F6"
+                }
+            },
+        };
+    </script>
+</head>
+
+<body>
+    <main class="bg-ivory">
+        <h1 class="bg-dkgray text-[2.5rem] text-white font-semibold text-center p-3">Income - Expense Calculator</h1>
+        <p class="p-3 text-center text-[2rem] text-black font-medium bg-green">Balance:<span id="balance-amount"
+                class="ml-[5px]"></span></p>
+        <div class="flex flex-col justify-center items-center px-5">
+            <!-- Radio buttons -->
+            <form id="show-table" class="my-5 flex flex-col sm:flex-row  justify-center">
+                <div>
+                    <input type="radio" id="all" name="show-section" value="all" checked>
+                    <label for="all" class="mr-2">Show Both</label>
+                </div>
+                <div>
+                    <input type="radio" id="income" name="show-section" value="income">
+                    <label for="income" class="mr-2">Show Income Only</label>
+                </div>
+                <div>
+                    <input type="radio" id="expense" name="show-section" value="expense">
+                    <label for="expense" class="mr-2">Show Expense Only</label>
+                </div>
+            </form>
+            <!-- Radio button ends -->
+
+            <!-- Income table section starts -->
+            <div class="flex-1" id="income-table-container">
+                <table class="w-[100%]">
+                    <thead>
+                        <tr>
+                            <p class="text-left bg-blue p-1 text-[1.2rem] text-center text-[1.5rem] font-semibold text-white">
+                                Income
+                            </p>
+                        </tr>
+                        <tr>
+                            <th class="text-left bg-ivory p-2 text-[1.2rem]">Description</th>
+                            <th class="text-left bg-ivory p-2 text-[1.2rem]">Amounts</th>
+                            <th class="text-left bg-ivory p-2 text-[1.2rem]"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="income-table-content" class="[&>*:nth-child(odd)]:bg-brown
+                        [&>*:nth-child(even)]:bg-ivory">
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td class="p-3 bg-green text-black text-[1.2rem] font-semibold  whitespace-nowrap">Total
+                                Income
+                            </td>
+                            <td class="p-3 bg-green text-black text-[1.2rem] font-semibold" id="income-total">1000</td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <form onsubmit="postIncomeTableData(); return false;">
+                    <input id='income-description-input'
+                        class="my-2 outline-none border-solid border-2 border-brown focus:border-green p-2 rounded-lg mr-2"
+                        placeholder="Enter income description note">
+                    <input id='income-amount-input'
+                        class="my-2 outline-none border-solid border-brown focus:border-green border-2 p-2 rounded-lg mr-2"
+                        placeholder="Enter income amount">
+                    <button id="income-form-button" class="bg-blue text-white py-1 p-2 whitespace-nowrap rounded-lg">Add
+                        New</button>
+                </form>
+            </div>
+            <!-- Income table section ends -->
+
+            <!-- Expense table section starts -->
+            <div class="flex-1 mt-5" id="expense-table-container">
+                <table class="w-[100%]">
+                    <thead>
+                        <tr>
+                            <p class="text-white text-left bg-dkgray p-1 text-[1.2rem] text-center text-[1.5rem] font-semibold">
+                                Expense
+                            </p>
+                        </tr>
+                        <tr>
+                            <th class="text-left bg-ivory p-2 text-[1.2rem]">Description</th>
+                            <th class="text-left bg-ivory p-2 text-[1.2rem]">Amounts</th>
+                            <th class="text-left bg-ivory p-2 text-[1.2rem]"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="expense-table-content" class="[&>*:nth-child(odd)]:bg-brown
+                        [&>*:nth-child(even)]:bg-ivory w-[100%]">
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td class="p-3 bg-green text-black text-[1.2rem] font-semibold  whitespace-nowrap">Total
+                                Expense
+                            </td>
+                            <td class="p-3 bg-green text-black text-[1.2rem] font-semibold" id="expense-total">1000</td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <form onsubmit="postExpenseTableData(); return false;">
+                    <input id='expense-description-input'
+                        class="my-2 outline-none border-solid border-2 border-brown focus:border-green p-2 rounded-lg mr-2"
+                        placeholder="Enter expense description note">
+                    <input id='expense-amount-input'
+                        class="my-2 outline-none border-solid border-2 border-brown focus:border-green p-2 rounded-lg mr-2"
+                        placeholder="Enter expense amount">
+                    <button id="expense-form-button"
+                        class="bg-blue text-white py-1 p-2 whitespace-nowrap rounded-lg">Add New</button>
+                </form>
+            </div>
+            <!-- Expense table section ends -->
+        </div>
+    </main>
+    <script src="./script.js"></script>
+</body>
+
+</html>
